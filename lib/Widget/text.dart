@@ -9,7 +9,22 @@ class Texts extends StatelessWidget {
     return Text(
       data,
       style: TextStyle(
-          color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+    );
+  }
+}
+
+
+class TextGrey extends StatelessWidget {
+  final data;
+
+  const TextGrey({Key key, this.data}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      data,
+      style: TextStyle(
+          color: Colors.grey[500], fontSize: 15, fontWeight: FontWeight.bold),
     );
   }
 }

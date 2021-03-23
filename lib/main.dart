@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tournament_app/Screens/LeaderBoards.dart';
 import 'package:tournament_app/Screens/Login.dart';
+import 'package:tournament_app/Screens/My_Referrals.dart';
 import 'package:tournament_app/Screens/RegisterPage.dart';
+import 'package:tournament_app/Screens/Rewards.dart';
+import 'package:tournament_app/Screens/Terms_Conditions.dart';
+import 'package:tournament_app/Screens/Wallet.dart';
 
 import 'Screens/SplashScreen.dart';
 void main() {
@@ -11,8 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       home: SplashScreen(),
+      //Wallet(),
+
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: Colors.black
@@ -20,6 +28,10 @@ class MyApp extends StatelessWidget {
       routes: {
         "/register":(context)=>RegisterPage(),
         "/login":(context)=>Login(),
+        "/My_Rewards":(context)=>My_Rewards(),
+        "/LeaderBoard":(context)=> LeaderBoard(),
+        "/Terms_Conditions":(context)=> Terms_Conditions(),
+        "/My_Referrals":(context)=> My_Referrals(),
       },
     );
   }
