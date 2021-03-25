@@ -4,18 +4,21 @@ class Textfield extends StatelessWidget {
   final hintText;
   final inputTye;
   final obs;
+  final Function textValidator;
+  final controllar;
 
-  const Textfield({Key key, this.hintText, this.inputTye, this.obs}) : super(key: key);
+  const Textfield({Key key, this.hintText, this.inputTye, this.obs , this.textValidator , this.controllar}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-      child: TextField(
+      child: TextFormField(
+        controller: controllar,
         cursorColor: Colors.white,
         obscureText: obs,
-
+        validator: textValidator,
         keyboardType: inputTye,
-        style: TextStyle(color: Colors.white,fontSize: 18),
+        style: TextStyle(color: Colors.black,fontSize: 18),
         textAlign: TextAlign.center,
         decoration: new InputDecoration(
           border: new OutlineInputBorder(

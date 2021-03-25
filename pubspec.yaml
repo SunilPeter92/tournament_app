@@ -34,6 +34,9 @@ dependencies:
   draggable_scrollbar: 0.0.4
   dotted_border: ^1.0.6
   intl_phone_field: ^1.4.4
+  dio: ^3.0.10
+  fluttertoast: ^7.1.4
+
 
 
 

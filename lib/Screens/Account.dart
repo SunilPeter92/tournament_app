@@ -32,6 +32,7 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
             Stack(
@@ -155,7 +156,7 @@ class _AccountState extends State<Account> {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Container(
-                height: MediaQuery.of(context).size.height/2.25,
+                height: MediaQuery.of(context).size.height/2.7,
                 width: MediaQuery.of(context).size.width/1.2,
                 decoration: BoxDecoration(
                     color: kprimary,
