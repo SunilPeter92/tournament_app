@@ -33,8 +33,8 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Backgroundcolor,
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height*1.5,
-          padding: EdgeInsets.only(top:50),
+          height: MediaQuery.of(context).size.height/0.92,
+          padding: EdgeInsets.only(top:20),
           child: Form(
             key: _formKey,
             child: Column(

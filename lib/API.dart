@@ -1,10 +1,15 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tournament_app/Screens/BottomNavigation.dart';
+import 'package:tournament_app/Screens/Global.dart';
 import 'package:tournament_app/Screens/Login.dart';
+import 'package:tournament_app/Screens/Models/GameModel.dart';
+import 'package:http/http.dart' as http;
 
 
 class API{
@@ -17,11 +22,12 @@ class API{
 
     Dio dio = new Dio();
 
-    dio.post("http://a023.autosandtools.com/api/user_login", data: data)
+    dio.post( Global.baseurl+"user_login", data: data)
         .then((response) {
 
       print(response.statusCode);
       if (response.statusCode == 201) {
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => BottomNavigation()),
@@ -29,7 +35,7 @@ class API{
       }
       else if (response.statusCode == 202) {
         Fluttertoast.showToast(
-            msg: 'This E-Mail already exists!', toastLength: Toast.LENGTH_LONG);
+            msg: "Email and password does't match!", toastLength: Toast.LENGTH_LONG);
       }
     }).catchError((error) => print(error));
   }
@@ -46,7 +52,7 @@ class API{
 
     Dio dio = new Dio();
 
-    dio.post("http://a023.autosandtools.com/api/user_register", data: data)
+    dio.post(Global.baseurl+"user_register", data: data)
         .then((response) {
 
       print(response.statusCode);
@@ -63,4 +69,29 @@ class API{
       }
     }).catchError((error) => print(error));
   }
+
+  static Future<Games> getgames() async {
+    try {
+
+
+      final http.Response response = await http.get( Global.baseurl + "get_games");
+
+
+          if (response.statusCode == 201) {
+        return Games.fromJson(jsonDecode(response.body));
+      }
+
+    }
+    // on SocketException catch (e) {
+    //   throw NoInternetExceptions("No Internet", "assets/internet.png");
+    // } on HttpException catch (e) {
+    //   throw HttpException("No Service found");
+    // } on FormatException catch (e) {
+    //   throw InvalidDataFormat("Invalid Data format");
+    // }
+      catch (e) {
+      throw Exception("Unknown Error");
+     }
+  }
+
 }

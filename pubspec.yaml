@@ -36,6 +36,9 @@ dependencies:
   intl_phone_field: ^1.4.4
   dio: ^3.0.10
   fluttertoast: ^7.1.4
+  progress_dialog: ^1.2.4
+  shared_preferences: ^0.5.12+4
+  http:
 
 
 

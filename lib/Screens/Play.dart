@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Screens/Game.dart';
 import 'package:tournament_app/Screens/GameDescription.dart';
 import 'package:tournament_app/Screens/GameDetail.dart';
 import 'package:tournament_app/Screens/LISTS/GameList.dart';
 import 'package:tournament_app/Screens/LISTS/PopularGames.dart';
+import 'package:tournament_app/Screens/Models/GameModel.dart';
 import 'package:tournament_app/Widget/text.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -69,7 +72,9 @@ class _PlayGamesState extends State<PlayGames> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 height: 300,
                 // width: 500,
@@ -79,7 +84,7 @@ class _PlayGamesState extends State<PlayGames> {
                     return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
-                          onTap: (){
+                          onTap: () {
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(builder: (context) => Game()),
@@ -152,42 +157,107 @@ class _PlayGamesState extends State<PlayGames> {
               SizedBox(
                 height: 10,
               ),
+              FutureBuilder<Games>(
+                  future: API.getgames(),
+                  builder: (context, snapshot)
+                  {
+                    if (snapshot.hasData) {
 
-              Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          childAspectRatio: 1 / 1.5,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10),
-                      itemCount: populargame.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Game()),
-                                );
-                              },
-                              child: Container(
-                                height: 350,
-                                width: MediaQuery.of(context).size.width / 1.2,
-                                decoration: BoxDecoration(
-                                  color: Colors.black26,
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    image: AssetImage(populargame[index].image),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ));
-                      })),
+                      return Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    childAspectRatio: 1 / 1.5,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10),
+                            itemCount: snapshot.data.getGames.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Game()),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 350,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.2,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black26,
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          image: NetworkImage(snapshot
+                                              .data.getGames[index].gameImg),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ));
+                            }),
+                      );
+                    } else {
+
+                        SizedBox(
+                          child: CircularProgressIndicator(),
+                          width: 60,
+                          height: 60,
+                        );
+                    }
+                    return Center(
+                      child: Container(
+                        child:  SizedBox(
+                          child: CircularProgressIndicator(),
+                          width: 60,
+                          height: 60,
+                        ),
+                      )
+                    );
+                  }
+                  ),
+
+              // Container(
+              //     padding: EdgeInsets.only(left: 10, right: 10),
+              //     height: MediaQuery.of(context).size.height / 2,
+              //     child: GridView.builder(
+              //         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              //             maxCrossAxisExtent: 200,
+              //             childAspectRatio: 1 / 1.5,
+              //             crossAxisSpacing: 10,
+              //             mainAxisSpacing: 10),
+              //         itemCount: .length,
+              //         scrollDirection: Axis.vertical,
+              //         itemBuilder: (BuildContext context, int index) {
+              //           return Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: InkWell(
+              //                 onTap: (){
+              //                   Navigator.push(
+              //                     context,
+              //                     MaterialPageRoute(builder: (context) => Game()),
+              //                   );
+              //                 },
+              //                 child: Container(
+              //                   height: 350,
+              //                   width: MediaQuery.of(context).size.width / 1.2,
+              //                   decoration: BoxDecoration(
+              //                     color: Colors.black26,
+              //                     borderRadius: BorderRadius.circular(20),
+              //                     image: DecorationImage(
+              //                       image: AssetImage([index].image),
+              //                       fit: BoxFit.cover,
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ));
+              //         })),
             ],
           ),
         ),

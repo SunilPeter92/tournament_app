@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Screens/BottomNavigation.dart';
+import 'package:tournament_app/Screens/RegisterPage.dart';
 import 'package:tournament_app/Widget/FaceBooklogin_Button.dart';
 import 'package:tournament_app/Widget/textFields.dart';
 import '../Constant.dart';
@@ -14,9 +17,26 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isLoggedIn ;
+
+  ProgressDialog pr;
+
+  void initState() {
+    pr = ProgressDialog(context);
+    super.initState();
+  }
+  @override
+  void setState(fn) async {
+    // TODO: implement setState
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs?.setBool("isLoggedIn", true);
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,28 +113,33 @@ class _LoginState extends State<Login> {
                 ),
                 Button(
                   title: 'Login',
-                  voidCallBack: () {
-                    if (_formKey.currentState.validate()) {
-                      API.login(context ,   emailController.text , passwordController.text);
-                    }
+                  voidCallBack: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                   if (_formKey.currentState.validate()) {
+                    // pr.show();
+                     API.login(context ,   emailController.text , passwordController.text);
+                   }
 
 
-                    // API.login(context, 'abc@gmail.com', '123456');
+                   //  API.login(context, 'reyan123@gmail.com', '123456');
                   },
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: "Dont't have an account?",
-                    style: TextStyle(color: Colors.black, fontSize: 17),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: "Register Here",
-                          style: TextStyle(color: Colors.black, fontSize: 17)),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Dont't have an account?" ,style: TextStyle(color: Colors.black, fontSize: 13)),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );} ,
+                        child: Text( "Register Here",style: TextStyle(color: Colors.black, fontSize: 15))),
+
+                  ],
                 ),
                 SizedBox(
                   height: 10,
