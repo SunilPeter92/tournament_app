@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Constant.dart';
 import 'package:tournament_app/Screens/Aboutus.dart';
 import 'package:tournament_app/Screens/Announcement.dart';
@@ -9,6 +10,8 @@ import 'package:tournament_app/Screens/Game.dart';
 import 'file:///E:/Flutter_Projects/tournament_app-main/lib/Screens/MyProfile.dart';
 import 'package:tournament_app/Screens/LISTS/accountitemList.dart';
 import 'package:tournament_app/Screens/LeaderBoards.dart';
+import 'package:tournament_app/Screens/Models/GetUserModel.dart';
+import 'package:tournament_app/Screens/MyProfile.dart';
 import 'package:tournament_app/Screens/My_Orders.dart';
 import 'package:tournament_app/Screens/My_Referrals.dart';
 import 'package:tournament_app/Screens/Refer&Earn.dart';
@@ -28,6 +31,13 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
 
   bool isSwitched = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,11 +55,17 @@ class _AccountState extends State<Account> {
                     child: Column(
                       children: [
                         SizedBox(height: 40,),
-                        Row(
-                          children: [
-                            Text('Hello', style: TextStyle(color: Colors.yellow,fontSize: 15),)
-                          ],
+                        FutureBuilder<GetUserModel>(
+                          future: API.getUsers(),
+                          builder: (context , snapshot){
+                            return  Row(
+                              children: [
+                              Text(snapshot.data.getUser.uname, style: TextStyle(color: Colors.yellow,fontSize: 15),)
+                            ],
+                            );
+                          },
                         ),
+
                         SizedBox(height: 20,),
                        Row(
                          children: [
@@ -66,8 +82,15 @@ class _AccountState extends State<Account> {
                                    width: 200,
                                    child: Row(
                                      children: [
-                                       Text('Username     :' + "     Jhhn doe", style: TextStyle(
+                                       Text('Username     :' , style: TextStyle(
                                            color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
+                                       FutureBuilder<GetUserModel>(
+                                         future: API.getUsers(),
+                                           builder: (context , snapshot){
+                                           return  Text( snapshot.data.getUser.uname , style: TextStyle(
+                                               color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),);
+                                           }
+                                       )
 
                                      ],
                                    ),

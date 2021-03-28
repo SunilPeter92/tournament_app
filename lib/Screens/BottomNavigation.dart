@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Screens/Account.dart';
 import 'package:tournament_app/Screens/Earn.dart';
 import 'package:tournament_app/Screens/Play.dart';
@@ -10,6 +11,7 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
+
   int _selectedIndex = 1;
  List<Widget> _children = [
    Earn(),
@@ -22,6 +24,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    API.getUsers();
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
