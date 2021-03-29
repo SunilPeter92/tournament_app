@@ -5,7 +5,7 @@ import 'package:tournament_app/Screens/My_Referrals.dart';
 import 'package:tournament_app/Screens/RegisterPage.dart';
 import 'package:tournament_app/Screens/Rewards.dart';
 import 'package:tournament_app/Screens/Terms_Conditions.dart';
-import 'package:tournament_app/Screens/Wallet.dart';
+
 
 import 'Screens/SplashScreen.dart';
 void main() {
@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: SplashScreen(),
+        home: SplashScreen(),
+     // home: RegisterPage(),
       //Wallet(),
 
       theme: ThemeData(

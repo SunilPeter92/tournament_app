@@ -29,7 +29,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-
   bool isSwitched = false;
 
   @override
@@ -38,6 +37,7 @@ class _AccountState extends State<Account> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,486 +54,828 @@ class _AccountState extends State<Account> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
                       children: [
-                        SizedBox(height: 40,),
-                        FutureBuilder<GetUserModel>(
-                          future: API.getUsers(),
-                          builder: (context , snapshot){
-                            return  Row(
-                              children: [
-                              Text(snapshot.data.getUser.uname, style: TextStyle(color: Colors.yellow,fontSize: 15),)
-                            ],
-                            );
-                          },
+                        SizedBox(
+                          height: 40,
                         ),
+                        Row(
+                          children: [
+                            FutureBuilder<GetUserModel>(
+                                future: API.getUsers(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(
+                                      snapshot.data.getUser.uname,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text("${snapshot.error}");
+                                  }
 
-                        SizedBox(height: 20,),
-                       Row(
-                         children: [
-                           CircleAvatar(
-                             radius: 50,
-                             backgroundColor: Colors.white,
-                             child: Icon(Icons.person , size: 100,color: DarkGreen,),
-                           ),
-                           Column(
-                             children: [
-                               Padding(
-                                 padding: const EdgeInsets.only(left: 20),
-                                 child: Container(
-                                   width: 200,
-                                   child: Row(
-                                     children: [
-                                       Text('Username     :' , style: TextStyle(
-                                           color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-                                       FutureBuilder<GetUserModel>(
-                                         future: API.getUsers(),
-                                           builder: (context , snapshot){
-                                           return  Text( snapshot.data.getUser.uname , style: TextStyle(
-                                               color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),);
-                                           }
-                                       )
+                                  // By default, show a loading spinner
+                                  return Container(
+                                    child: Text(
+                                      'name',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  );
+                                }),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.person,
+                                size: 100,
+                                color: DarkGreen,
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Container(
+                                    width: 200,
+                                    child: Row(
+                                      children: [
+                                        Text('Username     :',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold)),
+                                        FutureBuilder<GetUserModel>(
+                                            future: API.getUsers(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                return Text(
+                                                  snapshot.data.getUser.uname,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                );
+                                              } else if (snapshot.hasError) {
+                                                return Text(
+                                                    "${snapshot.error}");
+                                              }
 
-                                     ],
-                                   ),
-                                 ),
-                               ),
-                               SizedBox(height: 20,),
-                               Padding(
-                                 padding: const EdgeInsets.only(left: 20),
-                                 child: Container(
-                                   width: 200,
-                                   child: Row(
-                                     children: [
-                                       Text('Balance         :' + "     50", style: TextStyle(
-                                           color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-
-                                     ],
-                                   ),
-                                 ),
-                               ),
-                             ],
-                           ),
-
-                         ],
-                       )
+                                              // By default, show a loading spinner
+                                              return Container(
+                                                child: Text(
+                                                  'name',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              );
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Container(
+                                    width: 200,
+                                    child: Row(
+                                      children: [
+                                        Text('Balance         :' + "     50",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
                       ],
                     ),
-
                   ),
-
-
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.only(top: 200,left: 30),
+                  padding: const EdgeInsets.only(top: 200, left: 30),
                   child: Container(
                     height: 100,
-                    width: MediaQuery.of(context).size.width/1.2,
+                    width: MediaQuery.of(context).size.width / 1.2,
                     decoration: BoxDecoration(
-                      color: LightGreen,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
+                        color: LightGreen,
+                        borderRadius: BorderRadius.circular(10)),
                     padding: EdgeInsets.only(top: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(child: Column(
+                        Container(
+                            child: Column(
                           children: [
-                            Text('1', style: TextStyle(color: Colors.white),),
+                            Text(
+                              '1',
+                              style: TextStyle(color: Colors.white),
+                            ),
                             Container(
-                              width:55 ,  child: Text('Matches Played', style: TextStyle(color: Colors.white),)),
+                                width: 55,
+                                child: Text(
+                                  'Matches Played',
+                                  style: TextStyle(color: Colors.white),
+                                )),
                             //Text('Played', style: TextStyle(color: Colors.white),),
                           ],
                         )),
-                        VerticalDivider(endIndent: 20,color: Colors.yellow,),
-                        Container(child: Column(
+                        VerticalDivider(
+                          endIndent: 20,
+                          color: Colors.yellow,
+                        ),
+                        Container(
+                            child: Column(
                           children: [
-                            Text('0', style: TextStyle(color: Colors.white),),
+                            Text(
+                              '0',
+                              style: TextStyle(color: Colors.white),
+                            ),
                             Container(
-                                width:45,child: Text('Total Killed', style: TextStyle(color: Colors.white ,),)),
-                           // Text('Played', style: TextStyle(color: Colors.white),),
+                                width: 45,
+                                child: Text(
+                                  'Total Killed',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )),
+                            // Text('Played', style: TextStyle(color: Colors.white),),
                           ],
                         )),
-
-                        VerticalDivider(endIndent: 20, color: Colors.yellow,),
-                        Container(child: Column(
+                        VerticalDivider(
+                          endIndent: 20,
+                          color: Colors.yellow,
+                        ),
+                        Container(
+                            child: Column(
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.monetization_on, color: Colors.yellow, size: 20,),
-                                Text('1', style: TextStyle(color: Colors.white),),
+                                Icon(
+                                  Icons.monetization_on,
+                                  color: Colors.yellow,
+                                  size: 20,
+                                ),
+                                Text(
+                                  '1',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ],
                             ),
                             Container(
-                                width:50,child: Text('Amount Won', style: TextStyle(color: Colors.white),)),
-                           // Text('Played', style: TextStyle(color: Colors.white),),
+                                width: 50,
+                                child: Text(
+                                  'Amount Won',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                            // Text('Played', style: TextStyle(color: Colors.white),),
                           ],
                         )),
                       ],
                     ),
-
                   ),
                 )
               ],
-
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Container(
-                height: MediaQuery.of(context).size.height/2.7,
-                width: MediaQuery.of(context).size.width/1.2,
+                height: MediaQuery.of(context).size.height / 2.7,
+                width: MediaQuery.of(context).size.width / 1.2,
                 decoration: BoxDecoration(
-                    color: kprimary,
-                    borderRadius: BorderRadius.circular(20)
-                ),
+                    color: kprimary, borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                        child: SingleChildScrollView(
-                          child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.notifications_none_outlined,
+                              color: Colors.grey[500],
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextGrey(data: "Push Notification"),
+                            Spacer(),
+                            Container(
+                              height: 35,
+                              child: Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    print(isSwitched);
+                                  });
+                                },
+                                activeTrackColor: Colors.white,
+                                activeColor: Colors.yellow,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyProfile()),
+                            );
+                          },
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(width: 20,),
-                                  Icon(Icons.notifications_none_outlined, color: Colors.grey[500],),
-                                  SizedBox(width: 20,),
-                                  TextGrey(data :"Push Notification"),
-                                  Spacer(),
-                                  Container(
-                                    height: 35,
-                                    child: Switch(
-                                      value: isSwitched,
-                                      onChanged: (value){
-                                        setState(() {
-                                          isSwitched=value;
-                                          print(isSwitched);
-                                        });
-                                      },
-                                      activeTrackColor: Colors.white,
-                                      activeColor: Colors.yellow,
-                                    ),
-                                  ),
-                                ],
+                              SizedBox(
+                                width: 20,
                               ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => MyProfile()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.person_outline, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Profile"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
+                              Icon(
+                                Icons.person_outline,
+                                color: Colors.grey[500],
                               ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Wallet()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.account_balance_wallet_rounded, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Wallet"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
+                              SizedBox(
+                                width: 20,
                               ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Game()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    FaIcon(FontAwesomeIcons.gamepad ,color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Matches"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
+                              TextGrey(data: "My Profile"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
                               ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => My_Orders()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.local_grocery_store, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Order"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
+                              SizedBox(
+                                width: 5,
                               ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Statistics()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.assessment_outlined, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Statistics"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => My_Rewards()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.card_giftcard, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Reward"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => My_Referrals()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.people_rounded, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"My Referrals"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Announcement()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.flag, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"Announcement"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => TopPlayers()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.star, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"Top Players"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => LeaderBoard()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.assessment_rounded, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"Leaderboard"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => AppTutorial()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.info, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"App Tutorial"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Aboutus()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.info, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"About Us"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Customer_Support()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.headset, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"Customer Support"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              Row(
-                                children: [
-                                  SizedBox(width: 20,),
-                                  Icon(Icons.share, color: Colors.grey[500],),
-                                  SizedBox(width: 20,),
-                                  TextGrey(data :"Share App"),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                  SizedBox(width: 5,),
-                                ],
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Terms_Conditions()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20,),
-                                    Icon(Icons.event_note, color: Colors.grey[500],),
-                                    SizedBox(width: 20,),
-                                    TextGrey(data :"Terms & Conditions"),
-                                    Spacer(),
-                                    Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                    SizedBox(width: 5,),
-                                  ],
-                                ),
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              Row(
-                                children: [
-                                  SizedBox(width: 20,),
-                                  Icon(Icons.power_settings_new, color: Colors.grey[500],),
-                                  SizedBox(width: 20,),
-                                  TextGrey(data :"Logout"),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[500],size: 20,),
-                                  SizedBox(width: 5,),
-                                ],
-                              ),
-                              Divider(color: Colors.grey[500],),
-                              Container(
-                                child:Text("Version : 1", style: TextStyle(color: Colors.white),),
-                              ),
-
-                              SizedBox(height: 5,)
-
-
-
                             ],
                           ),
                         ),
-                      ),
-
-
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Wallet()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.account_balance_wallet_rounded,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Wallet"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Game()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              FaIcon(
+                                FontAwesomeIcons.gamepad,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Matches"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => My_Orders()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.local_grocery_store,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Order"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Statistics()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.assessment_outlined,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Statistics"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => My_Rewards()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.card_giftcard,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Reward"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => My_Referrals()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.people_rounded,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "My Referrals"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Announcement()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.flag,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "Announcement"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TopPlayers()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.star,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "Top Players"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LeaderBoard()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.assessment_rounded,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "Leaderboard"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AppTutorial()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.info,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "App Tutorial"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Aboutus()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.info,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "About Us"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Customer_Support()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.headset,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "Customer Support"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.share,
+                              color: Colors.grey[500],
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextGrey(data: "Share App"),
+                            Spacer(),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey[500],
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Terms_Conditions()),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.event_note,
+                                color: Colors.grey[500],
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              TextGrey(data: "Terms & Conditions"),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey[500],
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              Icons.power_settings_new,
+                              color: Colors.grey[500],
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextGrey(data: "Logout"),
+                            Spacer(),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey[500],
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        Container(
+                          child: Text(
+                            "Version : 1",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 20,)
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

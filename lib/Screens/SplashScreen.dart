@@ -16,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> main() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
+    var status = prefs.getBool('isLoggedIn') ?? true;
     print(status);
     runApp(MaterialApp(
         debugShowCheckedModeBanner: false,

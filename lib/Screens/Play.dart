@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Screens/Game.dart';
 import 'package:tournament_app/Screens/GameDescription.dart';
@@ -16,6 +17,16 @@ class PlayGames extends StatefulWidget {
 }
 
 class _PlayGamesState extends State<PlayGames> {
+
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,10 +170,8 @@ class _PlayGamesState extends State<PlayGames> {
               ),
               FutureBuilder<Games>(
                   future: API.getgames(),
-                  builder: (context, snapshot)
-                  {
+                  builder: (context, snapshot) {
                     if (snapshot.hasData) {
-
                       return Container(
                         padding: EdgeInsets.only(left: 10, right: 10),
                         height: MediaQuery.of(context).size.height / 2,
@@ -203,25 +212,12 @@ class _PlayGamesState extends State<PlayGames> {
                                   ));
                             }),
                       );
-                    } else {
-
-                        SizedBox(
-                          child: CircularProgressIndicator(),
-                          width: 60,
-                          height: 60,
-                        );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
                     }
-                    return Center(
-                      child: Container(
-                        child:  SizedBox(
-                          child: CircularProgressIndicator(),
-                          width: 60,
-                          height: 60,
-                        ),
-                      )
-                    );
-                  }
-                  ),
+
+                    return CircularProgressIndicator();
+                  }),
 
               // Container(
               //     padding: EdgeInsets.only(left: 10, right: 10),

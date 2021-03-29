@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tournament_app/API.dart';
 import 'package:tournament_app/Screens/Account.dart';
 import 'package:tournament_app/Screens/Earn.dart';
@@ -19,6 +20,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
    Account(),
 
   ];
+  setBool() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    prefs.setBool('isLoggedIn', false);
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,7 +35,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   void initState() {
     // TODO: implement initState
+    setBool();
     API.getUsers();
+
     super.initState();
   }
   @override
