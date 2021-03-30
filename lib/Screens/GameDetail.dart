@@ -5,11 +5,22 @@ import 'package:tournament_app/Screens/Joined_Members.dart';
 import 'package:tournament_app/Screens/Upcominggame.dart';
 
 class GameDetail extends StatefulWidget {
+  int userid;
+
+  GameDetail( int id) {
+    this.userid = id;
+  }
   @override
   _GameDetailState createState() => _GameDetailState();
 }
 
 class _GameDetailState extends State<GameDetail> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +104,7 @@ class _GameDetailState extends State<GameDetail> {
                     child: TabBarView(
                       children: [
                        GameDescription(),
-                       JoinedMember(),
+                       JoinedMember(widget.userid),
 
                       ],
                     ),

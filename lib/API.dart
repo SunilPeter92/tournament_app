@@ -13,8 +13,11 @@ import 'package:tournament_app/Screens/Models/GetUserModel.dart';
 import 'package:tournament_app/Screens/Models/RegisterModel.dart';
 import 'package:tournament_app/Screens/Models/UserRegisterModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tournament_app/Screens/Models/getMatchmodels.dart';
+import 'package:tournament_app/Screens/Models/ongoingjoinModel.dart';
 
 class API {
+
   static login(BuildContext context, email, password) {
     FormData data = FormData.fromMap({
       "email": email,
@@ -203,12 +206,44 @@ class API {
   }
 
   static Future<GetUserModel> getUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String userid = prefs.getString('userID');
     try {
       final http.Response response =
-          await http.get(Global.baseurl + "get_user" + "/" + "4");
+          await http.get(Global.baseurl + "get_user" + "/" + userid );
 
       if (response.statusCode == 201) {
         return GetUserModel.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      throw Exception("Unknown Error");
+    }
+  }
+
+
+  static Future<GetMatchModel> getmatches() async {
+
+    try {
+      final http.Response response =
+          await http.get(Global.baseurl + "get_matches" );
+
+      if (response.statusCode == 201) {
+        return GetMatchModel.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+
+      throw Exception("Unknown Error");
+    }
+  }
+  static Future<OngoingJoinModel> ongoingjoinmatches(String id) async {
+    try {
+      final http.Response response =
+          await http.get(Global.baseurl + "get_match_users/$id"  );
+
+      if (response.statusCode == 202) {
+        print(response.statusCode);
+        return OngoingJoinModel.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
       throw Exception("Unknown Error");

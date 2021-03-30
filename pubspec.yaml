@@ -39,6 +39,7 @@ dependencies:
   progress_dialog: ^1.2.4
   shared_preferences: ^0.5.12+4
   http:
+  shimmer: ^1.1.2
 
 
 

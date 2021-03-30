@@ -38,6 +38,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     setBool();
     API.getUsers();
 
+
     super.initState();
   }
   @override
